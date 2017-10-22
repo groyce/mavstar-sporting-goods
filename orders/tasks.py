@@ -13,6 +13,6 @@ def order_created(order_id):
                                             order.id)
     mail_sent = send_mail(subject,
                           message,
-                          'stumanu15@gmails.com',
-                          [order.email])
+                          'mavstaruno@gmail.com',
+                          [order.email]) #mavstaruno/@mavstar123
     return mail_sent
