@@ -7,18 +7,20 @@
     <link href="{% static "css/base.css" %}" rel="stylesheet">
 </head>
 <body>
-  <div id="header">
-    <a href="/" class="logo">MAVStar Sporting Goods</a>
+ <div id="header">
+    <a href="/" class="logo"><img  height="70px" src={% static 'img/bg_icon.jpg'%}></a>
+   <span > <a href="/" >MAVStar Sporting Goods</a></span>
   </div>
+
   <div id="subheader">
     <div class="cart">
   		{% with total_items=cart|length %}
     	{% if cart|length > 0 %}
       	Your cart: 
-      	<a href="{% url "cart:cart_detail" %}">
+      	<span class="cartText"><a href="{% url "cart:cart_detail" %}">
        	 {{ total_items }} item{{ total_items|pluralize }},
         	${{ cart.get_total_price }}
-      	</a>
+      	</a></span>
     	{% else %}
       	Your cart is empty.
     	{% endif %}
