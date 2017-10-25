@@ -1,12 +1,142 @@
-{% extends "sports/base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MAVStar Sporting Goods</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="{% static "css/base.css" %}" rel="stylesheet">    
+    <style>
+    	#header {
+			padding: 10px 100px;
+			overflow: auto;	
+			font-family: 'Ubuntu', sans-serif;
+			font-size: 25px;
+			font-color: #5499C7;
+		}
+		#header.logo {	
+			margin-right: 10%;	
+		}
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+            background: #5499C7;
+            font-color:: white;	
+        }
 
-{% block title %}
-  Checkout
-{% endblock %}
+        /* Set height of the grid so .sidenav scan be 100% (adjust as needed) */
+        .row.content {
+            height: 450px;
+            color: white;	
+        }
 
-{% block content %}
-  <h1>Checkout</h1>
-    
+        /* Set gray background color and 100% height */
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
+            color: white;	
+        }
+
+        /* Set black background color, white text and some padding */
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+                color: white;	
+            }
+
+            .row.content {
+                height: auto;
+                color: white;	
+            }
+        }
+        body {
+        	font-family: 'Ubuntu', sans-serif;
+            
+			color: #4b89b3;
+        }
+        .navbar-inverse .navbar-nav li a {
+    		color: white;
+		}
+       
+        
+        
+  </style>
+</head>
+<body id="app-layout">
+<div id="header">
+    <a href="/" class="logo"><img  height="70px" src={% static 'img/bg_icon.jpg'%}></a>
+   <span > <a href="/" >MAVStar Sporting Goods</a></span>
+  </div>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+
+            <!-- Collapsed Hamburger -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#myNavbar">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Branding Image -->
+           
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+		      <li >
+		        <a href="{% url "sports:product_list" %}">All</a>
+		      </li>
+		      {% for c in categories %}
+		        <li>
+		          <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+		        </li>
+		      {% endfor %}
+    	</ul>
+        <ul class="nav navbar-nav navbar-right">
+             {% with total_items=cart|length %}
+    			{% if cart|length > 0 %}
+		             <li><a href="{% url "cart:cart_detail" %}">		       	 				
+		      			<span>Cart: {{ total_items }} item{{ total_items|pluralize }},
+		        				${{ cart.get_total_price }} </span>
+		        		</a>
+		      		 </li>
+		      	{% else %}
+      			<li><a href="{% url "cart:cart_detail" %}">		       	 				
+		      			<span>Cart: {{ total_items }} item{{ total_items|pluralize }},
+		        				${{ cart.get_total_price }} </span>
+		        		</a>
+		      		 </li>
+    			{% endif %}
+  			 {% endwith %}
+                {% if user.is_authenticated %}
+                            <li><a href="{% url 'logout' %}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                {% else %}	
+                            <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                            <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-log-in"></span> Register</a></li>
+                        
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+  <div id="content">
+      <h2>Checkout</h2>
   <div class="order-info">
     <h3>Your order</h3>
     <ul>
@@ -25,4 +155,6 @@
     <p><input type="submit" value="Place order"></p>
     {% csrf_token %}
   </form>
-{% endblock %}
+
+</body>
+</html>

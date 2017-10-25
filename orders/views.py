@@ -2,10 +2,15 @@ from django.shortcuts import render
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
-from .tasks import order_created
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from .models import Order
+from sports.models import Category
 
 
+@login_required
 def order_create(request):
+    categories = Category.objects.all()
     cart = Cart(request)
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
@@ -18,9 +23,25 @@ def order_create(request):
                                         quantity=item['quantity'])  
             # clear the cart
             cart.clear()
+            order_created(order.id)
             # launch asynchronous task
-            order_created.delay(order.id)
-            return render(request,'orders/order/created.html', {'order': order})
+           # order_created.delay(order.id)
+            return render(request,'orders/order/created.html', {'order': order,'categories':categories})
     else:
         form = OrderCreateForm()
-    return render(request,'orders/order/create.html', {'cart': cart, 'form': form})
+    return render(request,'orders/order/create.html', {'cart': cart, 'form': form,'categories':categories})
+
+
+
+def order_created(order_id):
+   #Task to send an e-mail notification when an order is successfully created.
+    order = Order.objects.get(id=order_id)
+    subject = 'Order nr. {}'.format(order.id)
+    message = 'Dear {},\n\nYou have successfully placed an order.\
+                  Your order id is {}.'.format(order.first_name,
+                                            order.id)
+    mail_sent = send_mail(subject,
+                          message,
+                          'mavstaruno@gmail.com',
+                          [order.email]) #mavstaruno/@mavstar123
+    return mail_sent

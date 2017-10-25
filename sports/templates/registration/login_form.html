@@ -1,4 +1,4 @@
-{% load static %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="{% static "css/base.css" %}" rel="stylesheet">    
+    
     <style>
     	#header {
 			padding: 10px 100px;
@@ -25,12 +25,12 @@
             margin-bottom: 0;
             border-radius: 0;
             background: #5499C7;
-            font-color:: white;	
+            color: white;	
         }
 
         /* Set height of the grid so .sidenav scan be 100% (adjust as needed) */
         .row.content {
-            height: 450px;
+            height: 450px
             color: white;	
         }
 
@@ -64,14 +64,12 @@
         }
         body {
         	font-family: 'Ubuntu', sans-serif;
-            
+            background: #EFEFEF url(../static/img/bg01.png) repeat;
 			color: #4b89b3;
         }
-        .navbar-inverse .navbar-nav li a {
+         .navbar-inverse .navbar-nav li a {
     		color: white;
 		}
-       
-        
         
   </style>
 </head>
@@ -97,32 +95,7 @@
            
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-		      <li >
-		        <a href="{% url "sports:product_list" %}">All</a>
-		      </li>
-		      {% for c in categories %}
-		        <li>
-		          <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-		        </li>
-		      {% endfor %}
-    	</ul>
-        <ul class="nav navbar-nav navbar-right">
-             {% with total_items=cart|length %}
-    			{% if cart|length > 0 %}
-		             <li><a href="{% url "cart:cart_detail" %}">		       	 				
-		      			<span>Cart: {{ total_items }} item{{ total_items|pluralize }},
-		        				${{ cart.get_total_price }} </span>
-		        		</a>
-		      		 </li>
-		      	{% else %}
-      			<li><a href="{% url "cart:cart_detail" %}">		       	 				
-		      			<span>Cart: {{ total_items }} item{{ total_items|pluralize }},
-		        				${{ cart.get_total_price }} </span>
-		        		</a>
-		      		 </li>
-    			{% endif %}
-  			 {% endwith %}
+             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                             <li><a href="{% url 'logout' %}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                 {% else %}	
@@ -135,37 +108,20 @@
     </div>
 </nav>
 
-<div class="content container">
-    <div class="row">
-  <!-- Example row of columns -->
-    <h2>{{ product.name }}</h2>
-    <h3><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h3>
- 	<div class="row">
-      	<div class="col-md-6">
-            <div class="thumbnail">
-             	<a href="{{ product.get_absolute_url }}">
-		          		<img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-		         </a>
-		      </div>
-		  </div>
-		
-           <div class="col-md-4 col-md-offset">
-                <div class="caption">
-                        <p ><h4>Price: ${{ product.price }}</h4></h4></p>
-					      {{ product.description|linebreaks }}
-					      <form action="{% url "cart:cart_add" product.id %}" method="post">
-					 	 	{{ cart_product_form }}
-					  		{% csrf_token %}
-					  		<input type="submit" value="Add to cart">
-	 					</form>
-	 					<p ><h4>Product Description:</h4> {{ product.description }}</h4></p>
-                  </div>
-               
-            </div>
-     </div>
-  </div>
- </div>
 
- 
+{% block content %}
+<div class='col-sm-8 col-sm-offset-3'>
+<h1>{{ title }}</h1>
+
+<form class="form-horizontal" method="POST" action="" enctype='multipart/form-data'>
+<div class="form-group">
+{% csrf_token %}
+{{ form.as_p }}
+
+<input type="submit" class="btn btn-default" value='{{ title }}' />
+</div>
+</form>
+</div>
 </body>
 </html>
+{% endblock %}
