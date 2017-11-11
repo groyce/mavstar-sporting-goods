@@ -31,7 +31,7 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = '/product_list' 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 EMAIL_USE_TLS = True
@@ -44,15 +44,15 @@ EMAIL_PORT = 587
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',    
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sports',
-    'django.contrib.auth',
     'cart',
-    'orders',
+    'orders',   
+    'django.contrib.admin',  
 ]
 
 MIDDLEWARE = [

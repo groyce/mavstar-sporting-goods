@@ -23,25 +23,6 @@ class UserLoginForm(forms.Form):
         return super(UserLoginForm, self).clean(*args, **kwargs)
             
     
-class UserForgotPasswordForm(forms.Form):
-    email = forms.EmailField(label='Email address')
-    class Meta:
-            model = User
-            fields = ['email']
-            
-    def clean(self, *args, **kwargs):
-        email= self.cleaned_data.get("email")
-        try:
-            email_qs = User.objects.filter(email=email)
-            if email_qs.exists():
-                print("email---", email)
-        except User.DoesNotExist:
-            raise forms.ValidationError("This email is not registered")
-        
-        return super(UserForgotPasswordForm, self).clean(*args, **kwargs)
-            
-        
-
     
 class UserRegisterForm(forms.ModelForm):
     email = forms.EmailField(label='Email address')
