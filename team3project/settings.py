@@ -44,13 +44,13 @@ EMAIL_PORT = 587
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.admin',    
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sports',
+    'django.contrib.auth',
     'cart',
     'orders',
 ]
@@ -72,7 +72,7 @@ CART_SESSION_ID = 'cart'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['sports/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

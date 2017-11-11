@@ -7,6 +7,8 @@ from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.forms.forms import Form
 from .forms import *
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 
 def product_list(request, category_slug=None):
