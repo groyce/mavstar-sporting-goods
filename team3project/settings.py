@@ -25,7 +25,7 @@ SECRET_KEY = 'ar=q4^e83yja!s1q86p#fo#s@h)5w**e!^!g^rqs8ks1fldg0_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'mavstaruno.pythonanywhere.com']
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
