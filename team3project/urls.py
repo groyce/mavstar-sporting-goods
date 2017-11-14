@@ -11,6 +11,10 @@ urlpatterns = [
     url(r'^login/', login_view, name='login'),
     url(r'^logout/', logout_view, name='logout'),
     url(r'^register/', register_view, name='register'),
+
+    #payment
+    url(r'^paypal/', include('paypal.standard.ipn.urls')),
+    url(r'^payment/', include('payment.urls', namespace='payment')),
     
     # restore password urls
     url(r'^reset/password_reset/$', auth_views.password_reset, name='password_reset_1'),

@@ -52,7 +52,9 @@ INSTALLED_APPS = [
     'sports',
     'cart',
     'orders',   
-    'django.contrib.admin',  
+    'django.contrib.admin',
+    'paypal.standard.ipn',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +143,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# django-paypal settings
+PAYPAL_RECEIVER_EMAIL = 'mavstaruno@gmail.com'
+PAYPAL_TEST = True
