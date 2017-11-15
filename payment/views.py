@@ -5,11 +5,13 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404
 from paypal.standard.forms import PayPalPaymentsForm
 from orders.models import Order
+from sports.models import Category
 from django.views.decorators.csrf import csrf_exempt
 
 def payment_process(request):
     order_id = request.session.get('order_id')
     order = get_object_or_404(Order, id=order_id)
+    categories = Category.objects.all()
     host = request.get_host()
 
     paypal_dict = {
@@ -28,8 +30,8 @@ def payment_process(request):
     }
     form = PayPalPaymentsForm(initial=paypal_dict)
     return render(request,
-                  'payment/process.html',
-                  {'order': order, 'form':form})
+                  'payment/process.html', 
+                  {'order': order, 'form':form,'categories': categories})
 
 @csrf_exempt
 def payment_done(request):

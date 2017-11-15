@@ -11,10 +11,6 @@ urlpatterns = [
     url(r'^login/', login_view, name='login'),
     url(r'^logout/', logout_view, name='logout'),
     url(r'^register/', register_view, name='register'),
-
-    #payment
-    url(r'^paypal/', include('paypal.standard.ipn.urls')),
-    url(r'^payment/', include('payment.urls', namespace='payment')),
     
     # restore password urls
     url(r'^reset/password_reset/$', auth_views.password_reset, name='password_reset_1'),
@@ -23,8 +19,12 @@ urlpatterns = [
             {'template_name': 'registration/password_reset_confirm.html'}, name='password_reset_confirm'),
     url(r'^password-reset/complete/$',auth_views.password_reset_complete, {'template_name': 'registration/password_reset_complete.html'}, name='password_reset_complete'),
     
+    
+    
     url(r'^orders/', include('orders.urls', namespace='orders')),
     url(r'^cart/', include('cart.urls', namespace='cart')),
+    url(r'^paypal/', include('paypal.standard.ipn.urls')),
+    url(r'^payment/', include('payment.urls', namespace='payment')),
     url(r'^', include('sports.urls', namespace='sports')),
 ]
 if settings.DEBUG:

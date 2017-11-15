@@ -165,13 +165,19 @@
     </div>
 </nav>
 
-
-{% block title %}Pay using PayPal{% endblock %}
-  <h1>Pay using PayPal</h1>
-{% block content %}
-{{ form.render }}
-{% endblock %}
-       
+<div class='col-sm-8 col-sm-offset-2'>
+ <h2>Pay using PayPal</h2>
+                <div class="panel panel-primary">
+                    {% if user.is_authenticated %}
+                    	<div class="panel-heading">{{ user.username }} !</div>
+                	{% else %}
+                		<div class="panel-heading">Welcome!</div>
+                	{% endif %}
+                    <div class="panel-body">
+                       {{ form.render }}
+                    </div>
+        </div>
+</div>       
    
 </body>
 </html>
