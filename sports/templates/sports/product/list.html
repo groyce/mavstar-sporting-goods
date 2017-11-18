@@ -122,6 +122,7 @@
 		        		</a>
 		      		 </li>
     			{% endif %}
+    			
   			 {% endwith %}
                 {% if user.is_authenticated %}
                             <li><a href="{% url 'logout' %}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
@@ -136,14 +137,22 @@
 </nav>
 
 
+
 <div class="content container">
     <div class="row">
  <div class="col-md-10">
+ 
  <div class="links">
+ <br/>
+ <form action="" method="GET" accept-charset="utf-8">
+		<input name="q" type="text" placeholder="Search Products" value= "{{ request.GET.q }}" id="search_prod"/>
+			<input type="submit" value="Search" class="btn" />
+	</form>
   <!-- Example row of columns -->
    <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
    
        <div class="row">
+      {% if products|length > 0 %}
         {% for product in products %}
        		<div class="col-md-3">
                 <div class="thumbnail">
@@ -157,6 +166,11 @@
                 </div>
             </div>
           {% endfor %}
+         {% else %}
+          	<div class="col-md-3">
+          		<span>Your search did not match any products.  </span>
+          	</div>
+         {% endif %}
           </div>
        </div>
       </div> 
